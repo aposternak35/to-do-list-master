@@ -115,21 +115,24 @@
             <h4>Листы</h4>
         </td>
         </thead>
-        <form action="/auth/complete_check" method="post">
+
             <tr th:each="tdlist:${lists}">
                 <td>
+                    <form action="/auth/complete_check" method="post">
                     <input type="hidden" id="id" name="id" th:value="${tdlist.id}">
                     <input type="hidden" name="name" th:value="${tdlist.name}">
                     <input type="hidden" id="userEmail" name="userEmail" th:value="${tdlist.userEmail}">
                     <input type="checkbox" id="complete" name="complete" th:checked="${tdlist.complete}">
+                        <button type="submit">&#128395;</button>
+                    </form>
                 </td>
                 <td th:text="${tdlist.name}"></td>
                 <td><a href="/auth/addTask">Посмотреть задачи</a></td>
                 <td><input type="hidden" id="tdlist" name="tdlist" th:object="${tdlist}"></td>
             </tr>
-            <button type="submit">Обновить</button>
-        </form>
+
     </table>
+
 
 </div>
 
