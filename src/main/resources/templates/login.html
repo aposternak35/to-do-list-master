@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyTODO Login</title>
+    <style>
+        .dropbtn {
+            background-color: #3498DB;
+            color: white;
+            padding: 16px 20px;
+            width: 177px;
+            box-sizing: border-box;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body align="center">
+<form method="post" action="/auth/login">
+    <h2>Вход</h2>
+    <p>
+
+        <input type="text" id="username" name="username" placeholder="E-mail" required>
+    </p>
+    <p>
+
+        <input type="password" id="password" name="password" placeholder="Пароль" required>
+    </p>
+    <button class="dropbtn" type="submit">Войти</button>
+</form>
+<a href="/auth/registration">Зарегистрироваться</a>
+</body>
+</html>

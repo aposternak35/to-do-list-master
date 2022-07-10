@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyTODO Registration</title>
+    <style>
+        .dropbtn {
+            background-color: #3498DB;
+            color: white;
+            padding: 16px 20px;
+            width: 177px;
+            box-sizing: border-box;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+
+        }
+    </style>
+</head>
+<body align="center">
+
+
+<p>[[${message} ? ${message} : '']]</p>
+<form method="post" action="/auth/registration">
+    <h2>Регистрация</h2>
+    <p>
+
+        <input type="text" id="email" name="email" placeholder="E-mail" required>
+    </p>
+    <p>
+
+        <input type="password" id="password" name="password" placeholder="Password" required>
+    </p>
+    <p>
+
+        <input type="text" id="firstName" name="firstName" placeholder="Имя" required>
+    </p>
+    <p>
+
+        <input type="text" id="lastName" name="lastName" placeholder="Фамилия" required>
+    </p>
+    <button class="dropbtn" type="submit">Зарегистрироваться</button>
+</form>
+<a href="/auth/login">Назад</a>
+
+</body>
+</html>

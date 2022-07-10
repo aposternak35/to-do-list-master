@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyTODO List</title>
+    <style>
+        .main {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #6495ED;
+            padding-left: 10px;
+        }
+
+        .list {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: lightskyblue;
+            padding-left: 10px;
+        }
+
+
+        .dropbtn {
+            background-color: #4682B4;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .dropbtn:hover, .dropbtn:focus {
+            background-color: #2980B9;
+        }
+
+        .dropdown {
+            float: right;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown-content input {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .dropdown input:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <h1>MyTODO </h1>
+    <h2>List</h2>
+    <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn" th:align="right" th:text="${user.email}"></button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="#firstName" th:text="'Имя: '+${user.firstName}"></a>
+            <a href="#lastName" th:text="'Фамилия: '+${user.lastName}"></a>
+            <a href="#role" th:text="'Роль: '+${user.role}"></a>
+            <a href="/auth/login">Выйти</a>
+        </div>
+    </div>
+</div>
+<div class="list">
+    <form method="post" action="/auth/addList">
+        <h3 class="form-signin-heading">Добавить лист</h3>
+        <p>
+
+            <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
+            <button type="submit" style="border-radius: 20px;">+</button>
+        </p>
+    </form>
+    <table>
+        <thead>
+        <td>
+            <h4>Статус</h4>
+        </td>
+        <td>
+            <h4>Листы</h4>
+        </td>
+        </thead>
+        <form action="/auth/complete_check" method="post">
+            <tr th:each="tdlist:${lists}">
+                <td>
+                    <input type="hidden" id="id" name="id" th:value="${tdlist.id}">
+                    <input type="hidden" name="name" th:value="${tdlist.name}">
+                    <input type="hidden" id="userEmail" name="userEmail" th:value="${tdlist.userEmail}">
+                    <input type="checkbox" id="complete" name="complete" th:checked="${tdlist.complete}">
+                </td>
+                <td th:text="${tdlist.name}"></td>
+                <td><a href="/auth/addTask">Посмотреть задачи</a></td>
+                <td><input type="hidden" id="tdlist" name="tdlist" th:object="${tdlist}"></td>
+            </tr>
+            <button type="submit">Обновить</button>
+        </form>
+    </table>
+
+</div>
+
+<script>
+
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>
