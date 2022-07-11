@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <style>
+        .main {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #6495ED;
+            padding-left: 10px;
+        }
+
+        .list {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: lightskyblue;
+            padding-left: 10px;
+        }
+
+
+        .dropbtn {
+            background-color: #4682B4;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .dropbtn:hover, .dropbtn:focus {
+            background-color: #2980B9;
+        }
+
+        .dropdown {
+            float: right;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown-content input {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .dropdown input:hover {
+            background-color: #ddd;
+        }
+        .show {display: block;}
+    </style>
+</head>
+<body>
+<div class="main">
+    <h1>MyTODO </h1>
+    <h2>List</h2>
+    <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn" th:align="right" th:text="${user.email}"></button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="#firstName" th:text="'Имя: '+${user.firstName}"></a>
+            <a href="#lastName" th:text="'Фамилия: '+${user.lastName}"></a>
+            <a href="#role" th:text="'Роль: '+${user.role}"></a>
+            <a href="/auth/login">Выйти</a>
+        </div>
+    </div>
+</div>
+  <div class="list" th:switch="${user.role}">
+            <div th:case="${userRole}">
+                <p>Кажется, у вас нет прав для просмотра и редактирования этой страницы.</p>
+                <a href="/auth/index">Обратно на главную</a>
+            </div>
+            <div th:case="${adminRole}">
+                <h3>Список пользователей</h3>
+                <table border="1">
+                    <thead>
+                        <td><h4>E-mail</h4></td>
+                        <td><h4>Имя</h4></td>
+                        <td><h4>Фамилия</h4></td>
+                        <td><h4>Роль</h4></td>
+                        <td><h4>Статус</h4></td>
+                    </thead>
+                    <tr th:each="bufuser:${users}">
+                        <td th:text="${bufuser.email}"></td>
+                        <td th:text="${bufuser.firstName}"></td>
+                        <td th:text="${bufuser.lastName}"></td>
+
+                        <td>
+                            <p th:text="${bufuser.role}"></p>
+                            <form method="post" action="/auth/changeRole">
+                                <input type="hidden" name="id" th:value="${bufuser.id}">
+                                <input type="hidden" name="email" th:value="${bufuser.email}">
+                                <input type="hidden" name="firstName" th:value="${bufuser.firstName}">
+                                <input type="hidden" name="lastName" th:value="${bufuser.lastName}">
+                                <input type="hidden" name="password" th:value="${bufuser.password}">
+                                <input type="hidden" name="role" th:value="${bufuser.role}">
+                                <input type="hidden" name="status" th:value="${bufuser.status}">
+                            <button type="submit">Сменить роль</button>
+                            </form>
+                        </td>
+                        <td>
+                            <p th:text="${bufuser.status}"></p>
+                            <form method="post" action="/auth/changeStatus">
+                                <input type="hidden" name="id" th:value="${bufuser.id}">
+                                <input type="hidden" name="email" th:value="${bufuser.email}">
+                                <input type="hidden" name="firstName" th:value="${bufuser.firstName}">
+                                <input type="hidden" name="lastName" th:value="${bufuser.lastName}">
+                                <input type="hidden" name="password" th:value="${bufuser.password}">
+                                <input type="hidden" name="role" th:value="${bufuser.role}">
+                                <input type="hidden" name="status" th:value="${bufuser.status}">
+                            <button type="submit">Сменить статус</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+  </div>
+<script>
+
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

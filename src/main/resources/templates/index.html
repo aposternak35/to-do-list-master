@@ -81,6 +81,7 @@
         .dropdown input:hover {
             background-color: #ddd;
         }
+        .show {display: block;}
     </style>
 </head>
 <body>
@@ -93,10 +94,12 @@
             <a href="#firstName" th:text="'Имя: '+${user.firstName}"></a>
             <a href="#lastName" th:text="'Фамилия: '+${user.lastName}"></a>
             <a href="#role" th:text="'Роль: '+${user.role}"></a>
+            <a href="/auth/listOfUsers">Список пользователей</a>
             <a href="/auth/login">Выйти</a>
         </div>
     </div>
 </div>
+
 <div class="list">
     <form method="post" action="/auth/addList">
         <h3 class="form-signin-heading">Добавить лист</h3>
