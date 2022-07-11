@@ -8,11 +8,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tasks")
 public class Task {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "caption")
     private String caption;
+
     @Column(name = "list_id")
     private String listId;
 

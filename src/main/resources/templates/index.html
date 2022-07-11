@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>MyTODO List</title>
+
     <style>
+
         .main {
             position: relative;
             max-width: 1200px;
@@ -19,7 +22,6 @@
             background-color: lightskyblue;
             padding-left: 10px;
         }
-
 
         .dropbtn {
             background-color: #4682B4;
@@ -81,35 +83,46 @@
         .dropdown input:hover {
             background-color: #ddd;
         }
-        .show {display: block;}
+
+        .show {
+            display: block;
+        }
+
     </style>
+
 </head>
+
 <body>
+
 <div class="main">
+
     <h1>MyTODO </h1>
+
     <h2>List</h2>
+
     <div class="dropdown">
         <button onclick="myFunction()" class="dropbtn" th:align="right" th:text="${user.email}"></button>
         <div id="myDropdown" class="dropdown-content">
             <a href="#firstName" th:text="'Имя: '+${user.firstName}"></a>
             <a href="#lastName" th:text="'Фамилия: '+${user.lastName}"></a>
             <a href="#role" th:text="'Роль: '+${user.role}"></a>
-            <a href="/auth/listOfUsers">Список пользователей</a>
+            <a href="/admin/listOfUsers">Список пользователей</a>
             <a href="/auth/login">Выйти</a>
         </div>
     </div>
 </div>
 
 <div class="list">
-    <form method="post" action="/auth/addList">
+    <form method="post" action="/addList">
         <h3 class="form-signin-heading">Добавить лист</h3>
         <p>
-
             <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
             <button type="submit" style="border-radius: 20px;">+</button>
         </p>
     </form>
+
     <table>
+
         <thead>
         <td>
             <h4>Статус</h4>
@@ -119,20 +132,20 @@
         </td>
         </thead>
 
-            <tr th:each="tdlist:${lists}">
-                <td>
-                    <form action="/auth/complete_check" method="post">
+        <tr th:each="tdlist:${lists}">
+            <td>
+                <form action="/complete_check" method="post">
                     <input type="hidden" id="id" name="id" th:value="${tdlist.id}">
                     <input type="hidden" name="name" th:value="${tdlist.name}">
                     <input type="hidden" id="userEmail" name="userEmail" th:value="${tdlist.userEmail}">
                     <input type="checkbox" id="complete" name="complete" th:checked="${tdlist.complete}">
-                        <button type="submit">&#128395;</button>
-                    </form>
-                </td>
-                <td th:text="${tdlist.name}"></td>
-                <td><a href="/auth/addTask">Посмотреть задачи</a></td>
-                <td><input type="hidden" id="tdlist" name="tdlist" th:object="${tdlist}"></td>
-            </tr>
+                    <button type="submit">&#128395;</button>
+                </form>
+            </td>
+            <td th:text="${tdlist.name}"></td>
+            <td><a href="/addTask">Посмотреть задачи</a></td>
+            <td><input type="hidden" id="tdlist" name="tdlist" th:object="${tdlist}"></td>
+        </tr>
 
     </table>
 

@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <body>
+
 <h1 th:text="tdList.name"></h1>
-<form method="post" action="/auth/addTask">
+
+<form method="post" action="/addTask">
     <h3 class="form-signin-heading">Добавить задачу</h3>
     <p>
-
         <input type="text" id="caption" name="caption" class="form-control" placeholder="Caption" required>
         <button type="submit" style="border-radius: 20px;">+</button>
     </p>
 </form>
+
 <table>
     <thead>
     <td>
@@ -23,15 +27,16 @@
         <h4>Задачи</h4>
     </td>
     <td>
-
     </td>
     </thead>
     <tr th:each="task:${tasks}">
         <td><input type="checkbox"></td>
         <td th:text="${task.caption}"></td>
-
     </tr>
 </table>
-<a href="/auth/index">К листам</a>
+
+<a href="/index">К листам</a>
+
 </body>
+
 </html>

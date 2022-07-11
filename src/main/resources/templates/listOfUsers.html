@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <title>Users</title>
+
     <style>
+
         .main {
             position: relative;
             max-width: 1200px;
@@ -19,7 +22,6 @@
             background-color: lightskyblue;
             padding-left: 10px;
         }
-
 
         .dropbtn {
             background-color: #4682B4;
@@ -81,13 +83,20 @@
         .dropdown input:hover {
             background-color: #ddd;
         }
-        .show {display: block;}
+
+        .show {
+            display: block;
+        }
+
     </style>
 </head>
+
 <body>
 <div class="main">
+
     <h1>MyTODO </h1>
     <h2>List</h2>
+
     <div class="dropdown">
         <button onclick="myFunction()" class="dropbtn" th:align="right" th:text="${user.email}"></button>
         <div id="myDropdown" class="dropdown-content">
@@ -98,56 +107,58 @@
         </div>
     </div>
 </div>
-  <div class="list" th:switch="${user.role}">
-            <div th:case="${userRole}">
-                <p>Кажется, у вас нет прав для просмотра и редактирования этой страницы.</p>
-                <a href="/auth/index">Обратно на главную</a>
-            </div>
-            <div th:case="${adminRole}">
-                <h3>Список пользователей</h3>
-                <table border="1">
-                    <thead>
-                        <td><h4>E-mail</h4></td>
-                        <td><h4>Имя</h4></td>
-                        <td><h4>Фамилия</h4></td>
-                        <td><h4>Роль</h4></td>
-                        <td><h4>Статус</h4></td>
-                    </thead>
-                    <tr th:each="bufuser:${users}">
-                        <td th:text="${bufuser.email}"></td>
-                        <td th:text="${bufuser.firstName}"></td>
-                        <td th:text="${bufuser.lastName}"></td>
 
-                        <td>
-                            <p th:text="${bufuser.role}"></p>
-                            <form method="post" action="/auth/changeRole">
-                                <input type="hidden" name="id" th:value="${bufuser.id}">
-                                <input type="hidden" name="email" th:value="${bufuser.email}">
-                                <input type="hidden" name="firstName" th:value="${bufuser.firstName}">
-                                <input type="hidden" name="lastName" th:value="${bufuser.lastName}">
-                                <input type="hidden" name="password" th:value="${bufuser.password}">
-                                <input type="hidden" name="role" th:value="${bufuser.role}">
-                                <input type="hidden" name="status" th:value="${bufuser.status}">
-                            <button type="submit">Сменить роль</button>
-                            </form>
-                        </td>
-                        <td>
-                            <p th:text="${bufuser.status}"></p>
-                            <form method="post" action="/auth/changeStatus">
-                                <input type="hidden" name="id" th:value="${bufuser.id}">
-                                <input type="hidden" name="email" th:value="${bufuser.email}">
-                                <input type="hidden" name="firstName" th:value="${bufuser.firstName}">
-                                <input type="hidden" name="lastName" th:value="${bufuser.lastName}">
-                                <input type="hidden" name="password" th:value="${bufuser.password}">
-                                <input type="hidden" name="role" th:value="${bufuser.role}">
-                                <input type="hidden" name="status" th:value="${bufuser.status}">
-                            <button type="submit">Сменить статус</button>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-  </div>
+<div class="list" th:switch="${user.role}">
+    <div th:case="${userRole}">
+        <p>Кажется, у вас нет прав для просмотра и редактирования этой страницы.</p>
+        <a href="/index">Обратно на главную</a>
+    </div>
+    <div th:case="${adminRole}">
+        <h3>Список пользователей</h3>
+        <a href="/index">Обратно на главную</a>
+        <table border="1">
+            <thead>
+            <td><h4>E-mail</h4></td>
+            <td><h4>Имя</h4></td>
+            <td><h4>Фамилия</h4></td>
+            <td><h4>Роль</h4></td>
+            <td><h4>Статус</h4></td>
+            </thead>
+            <tr th:each="bufuser:${users}">
+                <td th:text="${bufuser.email}"></td>
+                <td th:text="${bufuser.firstName}"></td>
+                <td th:text="${bufuser.lastName}"></td>
+                <td>
+                    <p th:text="${bufuser.role}"></p>
+                    <form method="post" action="/admin/changeRole">
+                        <input type="hidden" name="id" th:value="${bufuser.id}">
+                        <input type="hidden" name="email" th:value="${bufuser.email}">
+                        <input type="hidden" name="firstName" th:value="${bufuser.firstName}">
+                        <input type="hidden" name="lastName" th:value="${bufuser.lastName}">
+                        <input type="hidden" name="password" th:value="${bufuser.password}">
+                        <input type="hidden" name="role" th:value="${bufuser.role}">
+                        <input type="hidden" name="status" th:value="${bufuser.status}">
+                        <button type="submit">Сменить роль</button>
+                    </form>
+                </td>
+                <td>
+                    <p th:text="${bufuser.status}"></p>
+                    <form method="post" action="/admin/changeStatus">
+                        <input type="hidden" name="id" th:value="${bufuser.id}">
+                        <input type="hidden" name="email" th:value="${bufuser.email}">
+                        <input type="hidden" name="firstName" th:value="${bufuser.firstName}">
+                        <input type="hidden" name="lastName" th:value="${bufuser.lastName}">
+                        <input type="hidden" name="password" th:value="${bufuser.password}">
+                        <input type="hidden" name="role" th:value="${bufuser.role}">
+                        <input type="hidden" name="status" th:value="${bufuser.status}">
+                        <button type="submit">Сменить статус</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
 <script>
 
     function myFunction() {
