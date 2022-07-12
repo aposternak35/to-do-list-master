@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+import static com.example.demo.model.Status.BANNED;
+
 @Data
 public class SecurityUser implements UserDetails {
 

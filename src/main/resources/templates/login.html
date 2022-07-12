@@ -22,8 +22,11 @@
 
 <body align="center">
 
+
 <form method="post" action="/auth/login">
     <h2>Вход</h2>
+    <div class="text-danger" th:text="${error}">...</div>
+    <div th:text="${logout}">...</div>
     <p>
         <input type="text" id="username" name="username" placeholder="E-mail" required>
     </p>
