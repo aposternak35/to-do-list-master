@@ -23,17 +23,17 @@
 <body align="center">
 
 
-<form method="post" action="/auth/login">
+<form method="post" th:action="@{/auth/login}">
     <h2>Вход</h2>
-    <div class="text-danger" th:text="${error}">...</div>
-    <div th:text="${logout}">...</div>
     <p>
-        <input type="text" id="username" name="username" placeholder="E-mail" required>
+        <input type="username" id="username" name="username" placeholder="E-mail" th:value="${username}" required>
     </p>
     <p>
-        <input type="password" id="password" name="password" placeholder="Пароль" required>
+        <input type="password" id="password" name="password" placeholder="Пароль" th:action="${password}" required>
     </p>
     <button class="dropbtn" type="submit">Войти</button>
+    <div th:if="${loginError!=null}" th:text="${loginError}" style="color: red">
+    </div>
 </form>
 
 <a href="/auth/registration">Зарегистрироваться</a>

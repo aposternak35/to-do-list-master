@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.*;
 import com.example.demo.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 import static com.example.demo.model.Role.USER;
 import static com.example.demo.model.Status.ACTIVE;
+import static com.example.demo.model.Status.BANNED;
 
 @Controller
 @RequestMapping("/auth")
@@ -33,25 +35,29 @@ public class AuthController {
 
 
     @GetMapping("/login")
-    public String getLoginPage(Model model,
-                               @RequestParam(value = "error", required = false) String error) {
-        if (checkAuth()) {
-            return "redirect:/index";
-        }
-
-        if (error != null) {
-            model.addAttribute("error", "Неверно введены данные или пользователь забанен");
-        }
+    public String getLoginPage() {
         return "login";
-    }
-
-    private boolean checkAuth() {
-        return SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User;
     }
 
     @GetMapping("/registration")
     public String getRegisterPage() {
         return "registration";
+    }
+
+    @PostMapping("/error")
+    public String loginError(@ModelAttribute("username") String username,
+                             Model model) {
+        User user = userRepository.findByEmail(username);
+        if (user != null) {
+            if (user.getStatus() == BANNED) {
+                model.addAttribute("loginError", "Пользователь заблокирован");
+            } else {
+                model.addAttribute("loginError", "Неверный пароль");
+            }
+        } else {
+            model.addAttribute("loginError", "Неверный логин");
+        }
+        return "login";
     }
 
     @PostMapping("/registration")

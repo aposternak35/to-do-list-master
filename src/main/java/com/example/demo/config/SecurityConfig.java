@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import com.example.demo.filter.SimpleAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -29,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/auth/registration").permitAll()
@@ -37,11 +40,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/auth/login").permitAll()
-
+                .loginPage("/auth/login")
                 .defaultSuccessUrl("/index")
+                .failureForwardUrl("/auth/error")
+                .permitAll()
                 .and()
                 .logout()
+                .permitAll()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
@@ -66,4 +71,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         return daoAuthenticationProvider;
     }
+
+    public SimpleAuthenticationFilter authenticationFilter() throws Exception {
+        SimpleAuthenticationFilter filter = new SimpleAuthenticationFilter();
+        filter.setAuthenticationManager(authenticationManagerBean());
+        return filter;
+    }
+
+
 }
